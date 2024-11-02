@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import sqlite3
+import os
 from datetime import datetime
 
 app = Flask(__name__)
@@ -51,6 +52,8 @@ def retrieve_data():
     data = [{'temperature': row[0], 'humidity': row[1], 'timestamp': row[2]} for row in rows]
     return jsonify(data), 200
 
+
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=3000)
+    port = int(os.getenv("PORT", 3000))
+    app.run(host='0.0.0.0', port=port)
